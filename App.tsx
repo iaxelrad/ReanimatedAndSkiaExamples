@@ -18,6 +18,11 @@ const CARD_WIDTH = WIDTH - 5;
 function App() {
   const gesture = Gesture.Pan();
 
+  //topLeft (10deg, -10deg)
+  //topRight (10deg, 10deg)
+  //bottomRight (-10deg, 10deg)
+  //bottomLeft (-10deg, -10deg)
+
   return (
     <View style={styles.container}>
       <BackgroundGradient width={WIDTH} height={HEIGHT} />
@@ -34,7 +39,7 @@ function App() {
               {
                 perspective: 300,
               },
-              {rotateX: '10deg'},
+              {rotateX: '-10deg'},
               {rotateY: '-10deg'},
             ],
           }}
