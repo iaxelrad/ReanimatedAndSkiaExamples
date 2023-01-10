@@ -27,11 +27,6 @@ function App() {
 
   const gesture = Gesture.Pan()
     .onBegin(event => {
-      //topLeft (10deg, -10deg)
-      //topRight (10deg, 10deg)
-      //bottomRight (-10deg, 10deg)
-      //bottomLeft (-10deg, -10deg)
-
       rotateX.value = withTiming(
         interpolate(event.y, [0, CARD_HEIGHT], [10, -10], Extrapolate.CLAMP),
       );
@@ -40,11 +35,6 @@ function App() {
       );
     })
     .onUpdate(event => {
-      //topLeft (10deg, -10deg)
-      //topRight (10deg, 10deg)
-      //bottomRight (-10deg, 10deg)
-      //bottomLeft (-10deg, -10deg)
-
       rotateX.value = interpolate(
         event.y,
         [0, CARD_HEIGHT],
@@ -92,8 +82,47 @@ function App() {
               zIndex: 300,
             },
             rStyle,
-          ]}
-        />
+          ]}>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: '10%',
+              left: '10%',
+              flexDirection: 'row',
+            }}>
+            <View
+              style={{
+                height: 50,
+                aspectRatio: 1,
+                borderRadius: 25,
+                backgroundColor: '#272f46',
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'column',
+                marginLeft: 10,
+                justifyContent: 'space-around',
+              }}>
+              <View
+                style={{
+                  height: 20,
+                  width: 80,
+                  borderRadius: 25,
+                  backgroundColor: '#272f46',
+                }}
+              />
+              <View
+                style={{
+                  height: 20,
+                  width: 80,
+                  borderRadius: 25,
+                  backgroundColor: '#272f46',
+                }}
+              />
+            </View>
+          </View>
+        </Animated.View>
       </GestureDetector>
     </View>
   );
