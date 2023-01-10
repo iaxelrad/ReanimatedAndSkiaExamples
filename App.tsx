@@ -10,6 +10,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import BackgroundGradient from './components/BackgroundGradient';
 
@@ -24,25 +25,43 @@ function App() {
   const rotateX = useSharedValue(0);
   const rotateY = useSharedValue(0);
 
-  const gesture = Gesture.Pan().onUpdate(event => {
-    //topLeft (10deg, -10deg)
-    //topRight (10deg, 10deg)
-    //bottomRight (-10deg, 10deg)
-    //bottomLeft (-10deg, -10deg)
+  const gesture = Gesture.Pan()
+    .onBegin(event => {
+      //topLeft (10deg, -10deg)
+      //topRight (10deg, 10deg)
+      //bottomRight (-10deg, 10deg)
+      //bottomLeft (-10deg, -10deg)
 
-    rotateX.value = interpolate(
-      event.y,
-      [0, CARD_HEIGHT],
-      [10, -10],
-      Extrapolate.CLAMP,
-    );
-    rotateY.value = interpolate(
-      event.x,
-      [0, CARD_WIDTH],
-      [-10, 10],
-      Extrapolate.CLAMP,
-    );
-  });
+      rotateX.value = withTiming(
+        interpolate(event.y, [0, CARD_HEIGHT], [10, -10], Extrapolate.CLAMP),
+      );
+      rotateY.value = withTiming(
+        interpolate(event.x, [0, CARD_WIDTH], [-10, 10], Extrapolate.CLAMP),
+      );
+    })
+    .onUpdate(event => {
+      //topLeft (10deg, -10deg)
+      //topRight (10deg, 10deg)
+      //bottomRight (-10deg, 10deg)
+      //bottomLeft (-10deg, -10deg)
+
+      rotateX.value = interpolate(
+        event.y,
+        [0, CARD_HEIGHT],
+        [10, -10],
+        Extrapolate.CLAMP,
+      );
+      rotateY.value = interpolate(
+        event.x,
+        [0, CARD_WIDTH],
+        [-10, 10],
+        Extrapolate.CLAMP,
+      );
+    })
+    .onFinalize(() => {
+      rotateX.value = withTiming(0);
+      rotateY.value = withTiming(0);
+    });
 
   const rStyle = useAnimatedStyle(() => {
     const rotateXValue = `${rotateX.value}deg`;
