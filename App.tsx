@@ -1,12 +1,9 @@
+import {Canvas} from '@shopify/react-native-skia';
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Grid Magnification</Text>
-    </View>
-  );
+  return <Canvas style={{flex: 1, backgroundColor: 'red'}}></Canvas>;
 }
 
 const styles = StyleSheet.create({
