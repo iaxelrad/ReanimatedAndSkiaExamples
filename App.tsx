@@ -58,9 +58,7 @@ function App() {
     const rotateYValue = `${rotateY.value}deg`;
     return {
       transform: [
-        {
-          perspective: 300,
-        },
+        {perspective: 300},
         {rotateX: rotateXValue},
         {rotateY: rotateYValue},
       ],
@@ -71,55 +69,12 @@ function App() {
     <View style={styles.container}>
       <BackgroundGradient width={WIDTH} height={HEIGHT} />
       <GestureDetector gesture={gesture}>
-        <Animated.View
-          style={[
-            {
-              height: CARD_HEIGHT,
-              width: CARD_WIDTH,
-              backgroundColor: 'black',
-              position: 'absolute',
-              borderRadius: 20,
-              zIndex: 300,
-            },
-            rStyle,
-          ]}>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: '10%',
-              left: '10%',
-              flexDirection: 'row',
-            }}>
-            <View
-              style={{
-                height: 50,
-                aspectRatio: 1,
-                borderRadius: 25,
-                backgroundColor: '#272f46',
-              }}
-            />
-            <View
-              style={{
-                flexDirection: 'column',
-                marginLeft: 10,
-                justifyContent: 'space-around',
-              }}>
-              <View
-                style={{
-                  height: 20,
-                  width: 80,
-                  borderRadius: 25,
-                  backgroundColor: '#272f46',
-                }}
-              />
-              <View
-                style={{
-                  height: 20,
-                  width: 80,
-                  borderRadius: 25,
-                  backgroundColor: '#272f46',
-                }}
-              />
+        <Animated.View style={[styles.animatedViewContainer, rStyle]}>
+          <View style={styles.placeholderContainer}>
+            <View style={styles.circle} />
+            <View style={styles.column}>
+              <View style={styles.rectContainer} />
+              <View style={styles.rectContainer} />
             </View>
           </View>
         </Animated.View>
@@ -134,6 +89,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+  },
+  animatedViewContainer: {
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    backgroundColor: 'black',
+    position: 'absolute',
+    borderRadius: 20,
+    zIndex: 300,
+  },
+  placeholderContainer: {
+    position: 'absolute',
+    bottom: '10%',
+    left: '10%',
+    flexDirection: 'row',
+  },
+  circle: {
+    height: 50,
+    aspectRatio: 1,
+    borderRadius: 25,
+    backgroundColor: '#272f46',
+  },
+  column: {
+    flexDirection: 'column',
+    marginLeft: 10,
+    justifyContent: 'space-around',
+  },
+  rectContainer: {
+    height: 20,
+    width: 80,
+    borderRadius: 25,
+    backgroundColor: '#272f46',
   },
 });
 
