@@ -2,10 +2,11 @@ import React, {FC, useEffect} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
+  Extrapolate,
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 
 const {height: SCREEN_HEIGHT} = Dimensions.get('window');
@@ -33,7 +34,14 @@ const BottomSheet: FC<Props> = () => {
   }, []);
 
   const rBottomSheetStyle = useAnimatedStyle(() => {
+    const borderRadius = interpolate(
+      translateY.value,
+      [MAX_TRANSLATE_Y + 50, MAX_TRANSLATE_Y],
+      [25, 5],
+      Extrapolate.CLAMP,
+    );
     return {
+      borderRadius,
       transform: [{translateY: translateY.value}],
     };
   });
