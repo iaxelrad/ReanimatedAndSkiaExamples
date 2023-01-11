@@ -8,7 +8,6 @@ import {
   useValue,
 } from '@shopify/react-native-skia';
 import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
 import {CANVAS_HEIGHT, CANVAS_WIDTH, MAX_DISTANCE} from '../constants';
 
 type RoundedItemProps = {
@@ -28,7 +27,7 @@ const RoundedItem: FC<RoundedItemProps> = ({
   progress,
   ...squareProps
 }) => {
-  const {x, y, width, height} = squareProps;
+  const {x, y} = squareProps;
   const previousDistance = useValue(0);
   const previousTouchedPoint = useValue({
     x: CANVAS_WIDTH / 2,
@@ -36,7 +35,9 @@ const RoundedItem: FC<RoundedItemProps> = ({
   });
 
   const distance = useComputedValue(() => {
-    if (point.current == null) return previousDistance.current; //TODO
+    if (point.current == null) {
+      return previousDistance.current;
+    }
     previousDistance.current = Math.sqrt(
       (point.current.x - x) ** 2 + (point.current.y - y) ** 2,
     );
@@ -72,7 +73,3 @@ const RoundedItem: FC<RoundedItemProps> = ({
 };
 
 export {RoundedItem};
-
-const styles = StyleSheet.create({
-  container: {},
-});
