@@ -1,4 +1,5 @@
 import {
+  Extrapolate,
   Group,
   interpolate,
   RoundedRect,
@@ -41,8 +42,9 @@ const RoundedItem: FC<RoundedItemProps> = ({
   const scale = useComputedValue(() => {
     return interpolate(
       distance.current * progress.current,
-      [0, MAX_DISTANCE],
+      [0, MAX_DISTANCE / 2],
       [1, 0],
+      {extrapolateLeft: Extrapolate.CLAMP, extrapolateRight: Extrapolate.CLAMP},
     );
   }, [distance, progress]);
 

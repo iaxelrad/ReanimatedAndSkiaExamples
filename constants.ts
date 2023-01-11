@@ -4,7 +4,7 @@ const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export const SQUARE_AMOUNT_HORIZONTAL = 10;
 export const SQUARE_CONTAINER_SIZE = SCREEN_WIDTH / SQUARE_AMOUNT_HORIZONTAL;
-export const PADDING = 10;
+export const PADDING = 20;
 export const SQUARE_SIZE = SQUARE_CONTAINER_SIZE - PADDING;
 
 export const SQUARES_AMOUNT_VERTICAL =
