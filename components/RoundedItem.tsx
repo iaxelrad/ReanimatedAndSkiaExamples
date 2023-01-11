@@ -29,14 +29,18 @@ const RoundedItem: FC<RoundedItemProps> = ({
   ...squareProps
 }) => {
   const {x, y, width, height} = squareProps;
-  const previuosDistance = useValue(0);
+  const previousDistance = useValue(0);
+  const previousTouchedPoint = useValue({
+    x: CANVAS_WIDTH / 2,
+    y: CANVAS_HEIGHT / 2,
+  });
 
   const distance = useComputedValue(() => {
-    if (point.current == null) return previuosDistance.current; //TODO
-    previuosDistance.current = Math.sqrt(
+    if (point.current == null) return previousDistance.current; //TODO
+    previousDistance.current = Math.sqrt(
       (point.current.x - x) ** 2 + (point.current.y - y) ** 2,
     );
-    return previuosDistance.current;
+    return previousDistance.current;
   }, [point]);
 
   const scale = useComputedValue(() => {
@@ -53,9 +57,11 @@ const RoundedItem: FC<RoundedItemProps> = ({
   }, [scale]);
 
   const origin = useComputedValue(() => {
-    if (point.current == null)
-      return {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2};
-    return point.current;
+    if (point.current == null) {
+      return previousTouchedPoint.current;
+    }
+    previousTouchedPoint.current = point.current;
+    return previousTouchedPoint.current;
   }, [point]);
 
   return (
