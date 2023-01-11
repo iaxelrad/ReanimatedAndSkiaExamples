@@ -19,7 +19,7 @@ import {
   SQUARE_AMOUNT_HORIZONTAL,
   SQUARE_CONTAINER_SIZE,
   SQUARE_SIZE,
-} from './constants';
+} from '../constants';
 
 function App() {
   const touchedPoint: SkiaMutableValue<{
