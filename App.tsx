@@ -1,6 +1,7 @@
 import {
   Canvas,
   Group,
+  runTiming,
   SkiaMutableValue,
   SweepGradient,
   useTouchHandler,
@@ -25,13 +26,21 @@ function App() {
     x: number;
     y: number;
   } | null> = useValue<{x: number; y: number} | null>(null);
+
+  const progress = useValue(0);
+
   const touchHandler = useTouchHandler({
-    onStart: event => {},
-    onActive: event => {
-      console.log({x: event.x, y: event.y});
+    onStart: event => {
+      runTiming(progress, 1, {duration: 300});
       touchedPoint.current = {x: event.x, y: event.y};
     },
-    onEnd: event => {},
+    onActive: event => {
+      touchedPoint.current = {x: event.x, y: event.y};
+    },
+    onEnd: () => {
+      runTiming(progress, 0, {duration: 300});
+      touchedPoint.current = null;
+    },
   });
   return (
     <View style={styles.container}>
@@ -46,6 +55,7 @@ function App() {
             return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
               return (
                 <RoundedItem
+                  progress={progress}
                   point={touchedPoint}
                   key={`i${i}-j${j}`}
                   x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
