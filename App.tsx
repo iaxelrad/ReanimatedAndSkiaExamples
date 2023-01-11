@@ -1,9 +1,44 @@
-import {Canvas} from '@shopify/react-native-skia';
+import {Canvas, Rect} from '@shopify/react-native-skia';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
+
+const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+
+const SQUARE_AMOUNT_HORIZONTAL = 10;
+const SQUARE_CONTAINER_SIZE = SCREEN_WIDTH / SQUARE_AMOUNT_HORIZONTAL;
+const PADDING = 10;
+const SQUARE_SIZE = SQUARE_CONTAINER_SIZE - PADDING;
+
+const SQUARES_AMOUNT_VERTICAL =
+  Math.floor(SCREEN_HEIGHT / SQUARE_CONTAINER_SIZE) - 3;
+
+const CANVAS_WIDTH = SCREEN_WIDTH;
+const CANVAS_HEIGHT = SQUARES_AMOUNT_VERTICAL * SQUARE_CONTAINER_SIZE;
 
 function App() {
-  return <Canvas style={{flex: 1, backgroundColor: 'red'}}></Canvas>;
+  return (
+    <View style={styles.container}>
+      <Canvas
+        style={{
+          width: CANVAS_WIDTH,
+          height: CANVAS_HEIGHT,
+        }}>
+        {new Array(SQUARE_AMOUNT_HORIZONTAL).fill(0).map((_, i) => {
+          return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
+            return (
+              <Rect
+                key={`i${i}-j${j}`}
+                x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
+                y={j * SQUARE_CONTAINER_SIZE + PADDING / 2}
+                width={SQUARE_SIZE}
+                height={SQUARE_SIZE}
+              />
+            );
+          });
+        })}
+      </Canvas>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -11,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'red',
   },
 });
 
