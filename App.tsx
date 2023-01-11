@@ -8,21 +8,17 @@ import {
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {RoundedItem} from './components/RoundedItem';
-
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
-
-const SQUARE_AMOUNT_HORIZONTAL = 10;
-const SQUARE_CONTAINER_SIZE = SCREEN_WIDTH / SQUARE_AMOUNT_HORIZONTAL;
-const PADDING = 10;
-const SQUARE_SIZE = SQUARE_CONTAINER_SIZE - PADDING;
-
-const SQUARES_AMOUNT_VERTICAL =
-  Math.floor(SCREEN_HEIGHT / SQUARE_CONTAINER_SIZE) - 3;
-
-const CANVAS_WIDTH = SCREEN_WIDTH;
-const CANVAS_HEIGHT = SQUARES_AMOUNT_VERTICAL * SQUARE_CONTAINER_SIZE;
+import {
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  PADDING,
+  SQUARES_AMOUNT_VERTICAL,
+  SQUARE_AMOUNT_HORIZONTAL,
+  SQUARE_CONTAINER_SIZE,
+  SQUARE_SIZE,
+} from './constants';
 
 function App() {
   const touchedPoint: SkiaMutableValue<{
