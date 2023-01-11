@@ -1,4 +1,4 @@
-package com.animated3dcard.newarchitecture.components;
+package com.reanimatedandskiaexamples.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
