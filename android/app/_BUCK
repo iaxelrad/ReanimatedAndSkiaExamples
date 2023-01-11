@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.animated3dcard",
+    package = "com.reanimatedandskiaexamples",
 )
 
 android_resource(
     name = "res",
-    package = "com.animated3dcard",
+    package = "com.reanimatedandskiaexamples",
     res = "src/main/res",
 )
 

@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface Animated3dCardTests : XCTestCase
+@interface ReanimatedandSkiaExamplesTests : XCTestCase
 
 @end
 
-@implementation Animated3dCardTests
+@implementation ReanimatedandSkiaExamplesTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {
