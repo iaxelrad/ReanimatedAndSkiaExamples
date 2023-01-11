@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
@@ -18,6 +18,11 @@ type Props = {};
 const BottomSheet: FC<Props> = () => {
   const translateY = useSharedValue(0);
 
+  const scrollTo = useCallback((destination: number) => {
+    'worklet';
+    translateY.value = withSpring(destination, {damping: 50});
+  }, []);
+
   const context = useSharedValue({y: 0});
 
   const gesture = Gesture.Pan()
@@ -27,10 +32,17 @@ const BottomSheet: FC<Props> = () => {
     .onUpdate(event => {
       translateY.value = event.translationY + context.value.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
+    })
+    .onEnd(() => {
+      if (translateY.value > -SCREEN_HEIGHT / 3) {
+        scrollTo(0);
+      } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+        scrollTo(MAX_TRANSLATE_Y);
+      }
     });
 
   useEffect(() => {
-    translateY.value = withSpring(-SCREEN_HEIGHT / 3, {damping: 50});
+    scrollTo(-SCREEN_HEIGHT / 3);
   }, []);
 
   const rBottomSheetStyle = useAnimatedStyle(() => {
