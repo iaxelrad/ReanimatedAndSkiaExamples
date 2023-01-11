@@ -1,4 +1,9 @@
-import React, {forwardRef, useCallback, useImperativeHandle} from 'react';
+import React, {
+  forwardRef,
+  ReactElement,
+  useCallback,
+  useImperativeHandle,
+} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
@@ -13,27 +18,32 @@ const {height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50;
 
-type BottomSheetProps = {};
+type BottomSheetProps = {
+  children?: ReactElement;
+};
 export type BottomSheetRefProps = {
   scrollTo: (destination: number) => void;
   isActive: () => boolean;
 };
 
-const BottomSheet = forwardRef<BottomSheetRefProps & BottomSheetProps>(
-  ({}, ref) => {
+const BottomSheet = forwardRef<BottomSheetRefProps, BottomSheetProps>(
+  ({children}, ref) => {
     const translateY = useSharedValue(0);
     const active = useSharedValue(false);
 
-    const scrollTo = useCallback((destination: number) => {
-      'worklet';
-      active.value = destination !== 0;
+    const scrollTo = useCallback(
+      (destination: number) => {
+        'worklet';
+        active.value = destination !== 0;
 
-      translateY.value = withSpring(destination, {damping: 50});
-    }, []);
+        translateY.value = withSpring(destination, {damping: 50});
+      },
+      [translateY, active],
+    );
 
     const isActive = useCallback(() => {
       return active.value;
-    }, []);
+    }, [active]);
 
     useImperativeHandle(ref, () => ({scrollTo, isActive}), [
       scrollTo,
@@ -75,6 +85,7 @@ const BottomSheet = forwardRef<BottomSheetRefProps & BottomSheetProps>(
       <GestureDetector gesture={gesture}>
         <Animated.View style={[styles.bottomSheetContainer, rBottomSheetStyle]}>
           <View style={styles.line} />
+          {children}
         </Animated.View>
       </GestureDetector>
     );

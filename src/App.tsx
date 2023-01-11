@@ -19,7 +19,9 @@ function App() {
       <View style={styles.container}>
         <StatusBar barStyle={'light-content'} />
         <TouchableOpacity style={styles.button} onPress={onPress} />
-        <BottomSheet ref={ref} />
+        <BottomSheet ref={ref}>
+          <View style={{flex: 1, backgroundColor: 'orange'}}></View>
+        </BottomSheet>
       </View>
     </GestureHandlerRootView>
   );
