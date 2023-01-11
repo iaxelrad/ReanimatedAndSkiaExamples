@@ -1,4 +1,12 @@
-import {Canvas, Group, SweepGradient, vec} from '@shopify/react-native-skia';
+import {
+  Canvas,
+  Group,
+  SkiaMutableValue,
+  SweepGradient,
+  useTouchHandler,
+  useValue,
+  vec,
+} from '@shopify/react-native-skia';
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {RoundedItem} from './components/RoundedItem';
@@ -17,18 +25,32 @@ const CANVAS_WIDTH = SCREEN_WIDTH;
 const CANVAS_HEIGHT = SQUARES_AMOUNT_VERTICAL * SQUARE_CONTAINER_SIZE;
 
 function App() {
+  const touchedPoint: SkiaMutableValue<{
+    x: number;
+    y: number;
+  } | null> = useValue<{x: number; y: number} | null>(null);
+  const touchHandler = useTouchHandler({
+    onStart: event => {},
+    onActive: event => {
+      console.log({x: event.x, y: event.y});
+      touchedPoint.current = {x: event.x, y: event.y};
+    },
+    onEnd: event => {},
+  });
   return (
     <View style={styles.container}>
       <Canvas
         style={{
           width: CANVAS_WIDTH,
           height: CANVAS_HEIGHT,
-        }}>
+        }}
+        onTouch={touchHandler}>
         <Group>
           {new Array(SQUARE_AMOUNT_HORIZONTAL).fill(0).map((_, i) => {
             return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
               return (
                 <RoundedItem
+                  point={touchedPoint}
                   key={`i${i}-j${j}`}
                   x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
                   y={j * SQUARE_CONTAINER_SIZE + PADDING / 2}

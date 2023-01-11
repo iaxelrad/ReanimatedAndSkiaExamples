@@ -1,4 +1,4 @@
-import {RoundedRect} from '@shopify/react-native-skia';
+import {RoundedRect, SkiaMutableValue} from '@shopify/react-native-skia';
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 
@@ -7,9 +7,13 @@ type RoundedItemProps = {
   y: number;
   width: number;
   height: number;
+  point: SkiaMutableValue<{
+    x: number;
+    y: number;
+  } | null>;
 };
 
-const RoundedItem: FC<RoundedItemProps> = ({...squareProps}) => {
+const RoundedItem: FC<RoundedItemProps> = ({point, ...squareProps}) => {
   return <RoundedRect {...squareProps} r={4} />;
 };
 
