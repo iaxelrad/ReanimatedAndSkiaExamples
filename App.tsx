@@ -1,4 +1,11 @@
-import {Canvas, Rect} from '@shopify/react-native-skia';
+import {
+  Canvas,
+  Group,
+  Rect,
+  RoundedRect,
+  SweepGradient,
+  vec,
+} from '@shopify/react-native-skia';
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
@@ -23,19 +30,26 @@ function App() {
           width: CANVAS_WIDTH,
           height: CANVAS_HEIGHT,
         }}>
-        {new Array(SQUARE_AMOUNT_HORIZONTAL).fill(0).map((_, i) => {
-          return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
-            return (
-              <Rect
-                key={`i${i}-j${j}`}
-                x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
-                y={j * SQUARE_CONTAINER_SIZE + PADDING / 2}
-                width={SQUARE_SIZE}
-                height={SQUARE_SIZE}
-              />
-            );
-          });
-        })}
+        <Group>
+          {new Array(SQUARE_AMOUNT_HORIZONTAL).fill(0).map((_, i) => {
+            return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
+              return (
+                <RoundedRect
+                  key={`i${i}-j${j}`}
+                  x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
+                  y={j * SQUARE_CONTAINER_SIZE + PADDING / 2}
+                  width={SQUARE_SIZE}
+                  height={SQUARE_SIZE}
+                  r={4}
+                />
+              );
+            });
+          })}
+          <SweepGradient
+            c={vec(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)}
+            colors={['cyan', 'magenta', 'yellow', 'cyan']}
+          />
+        </Group>
       </Canvas>
     </View>
   );
@@ -46,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'black',
   },
 });
 
