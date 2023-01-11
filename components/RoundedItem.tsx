@@ -1,4 +1,5 @@
 import {
+  Group,
   interpolate,
   RoundedRect,
   SkiaMutableValue,
@@ -7,7 +8,7 @@ import {
 } from '@shopify/react-native-skia';
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
-import {MAX_DISTANCE} from '../constants';
+import {CANVAS_HEIGHT, CANVAS_WIDTH, MAX_DISTANCE} from '../constants';
 
 type RoundedItemProps = {
   x: number;
@@ -45,21 +46,20 @@ const RoundedItem: FC<RoundedItemProps> = ({
     );
   }, [distance, progress]);
 
-  const scaledWidth = useComputedValue(() => {
-    return scale.current * width;
+  const transform = useComputedValue(() => {
+    return [{scale: scale.current}];
   }, [scale]);
 
-  const scaledHeight = useComputedValue(() => {
-    return scale.current * height;
-  }, [scale]);
+  const origin = useComputedValue(() => {
+    if (point.current == null)
+      return {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2};
+    return point.current;
+  }, [point]);
 
   return (
-    <RoundedRect
-      {...squareProps}
-      r={4}
-      width={scaledWidth}
-      height={scaledHeight}
-    />
+    <Group origin={origin} transform={transform}>
+      <RoundedRect {...squareProps} r={4} />
+    </Group>
   );
 };
 
