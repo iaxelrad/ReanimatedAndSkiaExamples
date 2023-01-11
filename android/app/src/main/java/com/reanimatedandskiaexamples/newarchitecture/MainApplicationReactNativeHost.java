@@ -1,4 +1,4 @@
-package com.animated3dcard.newarchitecture;
+package com.reanimatedandskiaexamples.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.animated3dcard.BuildConfig;
-import com.animated3dcard.newarchitecture.components.MainComponentsRegistry;
-import com.animated3dcard.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.reanimatedandskiaexamples.BuildConfig;
+import com.reanimatedandskiaexamples.newarchitecture.components.MainComponentsRegistry;
+import com.reanimatedandskiaexamples.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
