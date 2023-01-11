@@ -1,11 +1,16 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, StatusBar} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheet from './components/BottomSheet';
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Text>Reanimated And Skia Examples</Text>
-    </View>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <View style={styles.container}>
+        <StatusBar barStyle={'light-content'} />
+        <BottomSheet />
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
@@ -14,7 +19,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#111',
   },
 });
 
