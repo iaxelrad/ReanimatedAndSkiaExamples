@@ -1,13 +1,7 @@
-import {
-  Canvas,
-  Group,
-  Rect,
-  RoundedRect,
-  SweepGradient,
-  vec,
-} from '@shopify/react-native-skia';
+import {Canvas, Group, SweepGradient, vec} from '@shopify/react-native-skia';
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import {RoundedItem} from './components/RoundedItem';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 
@@ -34,13 +28,12 @@ function App() {
           {new Array(SQUARE_AMOUNT_HORIZONTAL).fill(0).map((_, i) => {
             return new Array(SQUARES_AMOUNT_VERTICAL).fill(0).map((_, j) => {
               return (
-                <RoundedRect
+                <RoundedItem
                   key={`i${i}-j${j}`}
                   x={i * SQUARE_CONTAINER_SIZE + PADDING / 2}
                   y={j * SQUARE_CONTAINER_SIZE + PADDING / 2}
                   width={SQUARE_SIZE}
                   height={SQUARE_SIZE}
-                  r={4}
                 />
               );
             });
