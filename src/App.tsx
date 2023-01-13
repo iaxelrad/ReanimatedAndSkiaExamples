@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Switch, View} from 'react-native';
+import {Dimensions, StyleSheet, Switch, View} from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -45,19 +45,34 @@ function App() {
 
     return {backgroundColor};
   });
+
+  const rCircleStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.circle, Colors.dark.circle],
+    );
+
+    return {backgroundColor};
+  });
+
   return (
     <Animated.View style={[styles.container, rStyle]}>
-      <Switch
-        value={theme === 'dark'}
-        onValueChange={toggled => {
-          setTheme(toggled ? 'dark' : 'light');
-        }}
-        trackColor={SWITCH_TRACK_COLOR}
-        thumbColor={'violet'}
-      />
+      <Animated.View style={[styles.circle, rCircleStyle]}>
+        <Switch
+          value={theme === 'dark'}
+          onValueChange={toggled => {
+            setTheme(toggled ? 'dark' : 'light');
+          }}
+          trackColor={SWITCH_TRACK_COLOR}
+          thumbColor={'violet'}
+        />
+      </Animated.View>
     </Animated.View>
   );
 }
+
+const SIZE = Dimensions.get('window').width * 0.7;
 
 const styles = StyleSheet.create({
   container: {
@@ -65,6 +80,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  circle: {
+    width: SIZE,
+    aspectRatio: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: SIZE / 2,
+    shadowOffset: {
+      width: 0,
+      height: 20,
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    elevation: 8,
   },
 });
 
