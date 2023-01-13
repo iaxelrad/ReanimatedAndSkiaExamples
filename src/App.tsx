@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Switch, View} from 'react-native';
+import {Dimensions, StatusBar, StyleSheet, Switch} from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -67,6 +67,9 @@ function App() {
 
   return (
     <Animated.View style={[styles.container, rStyle]}>
+      <StatusBar
+        barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+      />
       <Animated.Text style={[styles.text, rTextStyle]}>Theme</Animated.Text>
       <Animated.View style={[styles.circle, rCircleStyle]}>
         <Switch
