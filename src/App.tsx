@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Switch} from 'react-native';
+import {StyleSheet, Switch, View} from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 const Colors = {
   dark: {
@@ -23,8 +30,23 @@ type Theme = 'light' | 'dark';
 
 function App() {
   const [theme, setTheme] = useState<Theme>('light');
+
+  // const progress = useSharedValue(0);
+  const progress = useDerivedValue(() => {
+    return theme === 'dark' ? withTiming(1) : withTiming(0);
+  }, [theme]);
+
+  const rStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.background, Colors.dark.background],
+    );
+
+    return {backgroundColor};
+  });
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, rStyle]}>
       <Switch
         value={theme === 'dark'}
         onValueChange={toggled => {
@@ -33,7 +55,7 @@ function App() {
         trackColor={SWITCH_TRACK_COLOR}
         thumbColor={'violet'}
       />
-    </View>
+    </Animated.View>
   );
 }
 
