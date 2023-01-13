@@ -4,7 +4,6 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -56,8 +55,19 @@ function App() {
     return {backgroundColor};
   });
 
+  const rTextStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.text, Colors.dark.text],
+    );
+
+    return {color};
+  });
+
   return (
     <Animated.View style={[styles.container, rStyle]}>
+      <Animated.Text style={[styles.text, rTextStyle]}>Theme</Animated.Text>
       <Animated.View style={[styles.circle, rCircleStyle]}>
         <Switch
           value={theme === 'dark'}
@@ -95,6 +105,13 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.1,
     elevation: 8,
+  },
+  text: {
+    fontSize: 70,
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    letterSpacing: 14,
+    marginBottom: 35,
   },
 });
 
