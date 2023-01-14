@@ -1653,10 +1653,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
-"@shopify/react-native-skia@^0.1.170":
-  version "0.1.170"
-  resolved "https://registry.yarnpkg.com/@shopify/react-native-skia/-/react-native-skia-0.1.170.tgz#45d46a0009b2599773f583adce3207a1134626b1"
-  integrity sha512-WwZiJyMHyxDZtAo2LQ/grylgFwMhX4XJUCGZz8V/LCUjHAaxzsTQoeG5Bool5x8bxPTL5YYalKWOpJtHRub6Lg==
+"@shopify/react-native-skia@^0.1.171":
+  version "0.1.171"
+  resolved "https://registry.yarnpkg.com/@shopify/react-native-skia/-/react-native-skia-0.1.171.tgz#70f00e178d3bc06d95535a82cbfbea2bd3723987"
+  integrity sha512-m/pSfc/xAlAqSIEzFsf82QJs3aRkq+Bn1xEJMPKWIZ8J4QDE6bGQ8MXy9/nM+89VYz1GjdYI2BKnCC3ZMjhT6Q==
   dependencies:
     "@types/pixelmatch" "^5.2.4"
     "@types/pngjs" "^6.0.1"
