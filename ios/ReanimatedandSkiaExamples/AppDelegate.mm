@@ -6,7 +6,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"ReanimatedandSkiaExamples";
+  self.moduleName = @"Reanimated and Skia Examples";
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
