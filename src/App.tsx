@@ -1,21 +1,43 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import AnimatedCardScreen from './components/AnimatedCard';
+import GridMagnificationScreen from './components/GridMagnification';
+import HomeScreen from './components/HomeScreen';
+import InterpolateColorsScreen from './components/InterpolateColors';
+import ReanimatedBottomSheetScreen from './components/ReanimatedBottomSheet';
+
+export type RootStackParamList = {
+  Home: undefined;
+  AnimatedCard: undefined;
+  ReanimatedBottomSheet: undefined;
+  GridMagnification: undefined;
+  InterpolateColors: undefined;
+};
+
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Text>Reanimated And Skia Examples</Text>
-    </View>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="Home">
+        <RootStack.Screen name="Home" component={HomeScreen} />
+        <RootStack.Screen name="AnimatedCard" component={AnimatedCardScreen} />
+        <RootStack.Screen
+          name="ReanimatedBottomSheet"
+          component={ReanimatedBottomSheetScreen}
+        />
+        <RootStack.Screen
+          name="GridMagnification"
+          component={GridMagnificationScreen}
+        />
+        <RootStack.Screen
+          name="InterpolateColors"
+          component={InterpolateColorsScreen}
+        />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-});
 
 export default App;
