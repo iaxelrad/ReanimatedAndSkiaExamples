@@ -1,5 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View, ViewBase} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import {TaskInterface} from '.';
 
 type ListItemProps = {
@@ -7,12 +17,33 @@ type ListItemProps = {
 };
 
 const ListItem = ({task}: ListItemProps) => {
+  const translateX = useSharedValue(0);
+  const gesture = Gesture.Pan()
+    .onStart(event => {
+      translateX.value = event.translationX;
+    })
+    .onEnd(() => {
+      translateX.value = withTiming(0);
+    });
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: translateX.value,
+        },
+      ],
+    };
+  });
+
   return (
-    <View style={styles.taskContainer}>
-      <View style={styles.task}>
-        <Text style={styles.taskTitle}>{task.title}</Text>
-      </View>
-    </View>
+    <GestureHandlerRootView style={styles.taskContainer}>
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[styles.task, rStyle]}>
+          <Text style={styles.taskTitle}>{task.title}</Text>
+        </Animated.View>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 };
 
