@@ -12,9 +12,10 @@ const AnimatedFlatListScreen = (/* props: Props */) => {
       <FlatList
         data={data}
         contentContainerStyle={styles.contentContainer}
-        renderItem={() => {
-          return <ListItem />;
+        onViewableItemsChanged={({viewableItems}) => {
+          console.log(viewableItems);
         }}
+        renderItem={() => <ListItem />}
       />
     </View>
   );
