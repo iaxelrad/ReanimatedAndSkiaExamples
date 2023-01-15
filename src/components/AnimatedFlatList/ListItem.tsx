@@ -17,7 +17,10 @@ const ListItem = ({viewableItems, item}: ListItemProps) => {
         .find(viewableItem => viewableItem.item.id === item.id),
     );
 
-    return {opacity: withTiming(isVisible ? 1 : 0)};
+    return {
+      opacity: withTiming(isVisible ? 1 : 0),
+      transform: [{scale: withTiming(isVisible ? 1 : 0.6)}],
+    };
   }, []);
   return <Animated.View style={[styles.flatListContainer, rStyle]} />;
 };
