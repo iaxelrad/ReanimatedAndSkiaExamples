@@ -6,24 +6,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-
-const Colors = {
-  dark: {
-    background: '#1E1E1E',
-    circle: '#252525',
-    text: '#F8F8F8',
-  },
-  light: {
-    background: '#F8F8F8',
-    circle: '#FFF',
-    text: '#1E1E1E',
-  },
-};
-
-const SWITCH_TRACK_COLOR = {
-  true: 'rgba(256, 0, 256, 0.2)',
-  false: 'rgba(0,0,0, 0.1)',
-};
+import {Colors, SWITCH_TRACK_COLOR} from '../constants';
 
 type Theme = 'light' | 'dark';
 

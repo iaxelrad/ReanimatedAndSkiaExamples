@@ -13,3 +13,20 @@ export const SQUARES_AMOUNT_VERTICAL =
 export const CANVAS_WIDTH = SCREEN_WIDTH;
 export const CANVAS_HEIGHT = SQUARES_AMOUNT_VERTICAL * SQUARE_CONTAINER_SIZE;
 export const MAX_DISTANCE = Math.sqrt(CANVAS_WIDTH ** 2 + CANVAS_HEIGHT ** 2);
+export const Colors = {
+  dark: {
+    background: '#1E1E1E',
+    circle: '#252525',
+    text: '#F8F8F8',
+  },
+  light: {
+    background: '#F8F8F8',
+    circle: '#FFF',
+    text: '#1E1E1E',
+  },
+};
+
+export const SWITCH_TRACK_COLOR = {
+  true: 'rgba(256, 0, 256, 0.2)',
+  false: 'rgba(0,0,0, 0.1)',
+};
