@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, ViewToken} from 'react-native';
-import Animated, {useAnimatedStyle} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>;
@@ -11,7 +11,13 @@ type ListItemProps = {
 
 const ListItem = ({viewableItems, item}: ListItemProps) => {
   const rStyle = useAnimatedStyle(() => {
-    return {opacity: 1};
+    const isVisible = Boolean(
+      viewableItems.value
+        .filter(item => item.isViewable)
+        .find(viewableItem => viewableItem.item.id === item.id),
+    );
+
+    return {opacity: withTiming(isVisible ? 1 : 0)};
   }, []);
   return <Animated.View style={[styles.flatListContainer, rStyle]} />;
 };
