@@ -1,5 +1,6 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View, ViewToken} from 'react-native';
+import {useSharedValue} from 'react-native-reanimated';
 import ListItem from './ListItem';
 
 // type Props = {};
@@ -7,15 +8,20 @@ import ListItem from './ListItem';
 const data = new Array(50).fill(0).map((_, i) => ({id: i}));
 
 const AnimatedFlatListScreen = (/* props: Props */) => {
+  const viewableItems = useSharedValue<ViewToken[]>([]);
+
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
         contentContainerStyle={styles.contentContainer}
-        onViewableItemsChanged={({viewableItems}) => {
+        onViewableItemsChanged={({viewableItems: vItems}) => {
           console.log(viewableItems);
+          viewableItems.value = vItems;
         }}
-        renderItem={() => <ListItem />}
+        renderItem={({item}) => (
+          <ListItem item={item} viewableItems={viewableItems} />
+        )}
       />
     </View>
   );

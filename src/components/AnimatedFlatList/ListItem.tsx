@@ -1,10 +1,19 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, ViewToken} from 'react-native';
+import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 
-// type Props = {};
+type ListItemProps = {
+  viewableItems: Animated.SharedValue<ViewToken[]>;
+  item: {
+    id: number;
+  };
+};
 
-const ListItem = (/* props: Props */) => {
-  return <View style={styles.flatListContainer} />;
+const ListItem = ({viewableItems, item}: ListItemProps) => {
+  const rStyle = useAnimatedStyle(() => {
+    return {opacity: 1};
+  }, []);
+  return <Animated.View style={[styles.flatListContainer, rStyle]} />;
 };
 
 export default ListItem;
