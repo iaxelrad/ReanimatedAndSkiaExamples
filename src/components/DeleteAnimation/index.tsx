@@ -1,5 +1,6 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ListItem from './ListItem';
 
 const TITLES = [
@@ -23,14 +24,16 @@ type Props = {};
 const DeleteAnimationScreen = (props: Props) => {
   const [tasks, setTasks] = useState(TASKS);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Tasks</Text>
-      <ScrollView style={{flex: 1}}>
-        {tasks.map(task => {
-          return <ListItem task={task} key={task.index} />;
-        })}
-      </ScrollView>
-    </SafeAreaView>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>Tasks</Text>
+        <ScrollView style={{flex: 1}}>
+          {tasks.map(task => {
+            return <ListItem task={task} key={task.index} />;
+          })}
+        </ScrollView>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 };
 
