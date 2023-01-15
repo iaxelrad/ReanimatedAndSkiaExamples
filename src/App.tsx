@@ -22,7 +22,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="AnimatedFlatList">
+      <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={HomeScreen} />
         <RootStack.Screen name="AnimatedCard" component={AnimatedCardScreen} />
         <RootStack.Screen

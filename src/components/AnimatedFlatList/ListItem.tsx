@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-type Props = {};
+// type Props = {};
 
-const ListItem = (props: Props) => {
+const ListItem = (/* props: Props */) => {
   return <View style={styles.flatListContainer} />;
 };
 

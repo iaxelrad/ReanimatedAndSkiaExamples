@@ -25,6 +25,10 @@ const HomeScreen = ({navigation}: Props) => {
         title="Go to Interpolate Colors"
         onPress={() => navigation.navigate('InterpolateColors')}
       />
+      <Button
+        title="Go to Animated FlatList"
+        onPress={() => navigation.navigate('AnimatedFlatList')}
+      />
     </View>
   );
 };

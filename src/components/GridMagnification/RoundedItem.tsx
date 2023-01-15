@@ -8,7 +8,7 @@ import {
   useValue,
 } from '@shopify/react-native-skia';
 import React, {FC} from 'react';
-import {CANVAS_HEIGHT, CANVAS_WIDTH, MAX_DISTANCE} from '../constants';
+import {CANVAS_HEIGHT, CANVAS_WIDTH, MAX_DISTANCE} from '../../constants';
 
 type RoundedItemProps = {
   x: number;

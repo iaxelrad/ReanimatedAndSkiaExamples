@@ -2,16 +2,16 @@ import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import ListItem from './ListItem';
 
-type Props = {};
+// type Props = {};
 
 const data = new Array(50).fill(0).map((_, i) => ({id: i}));
 
-const AnimatedFlatListScreen = (props: Props) => {
+const AnimatedFlatListScreen = (/* props: Props */) => {
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        contentContainerStyle={{paddingTop: 40}}
+        contentContainerStyle={styles.contentContainer}
         renderItem={() => {
           return <ListItem />;
         }}
@@ -27,4 +27,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  contentContainer: {paddingTop: 40},
 });
