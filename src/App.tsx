@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import AnimatedCardScreen from './components/AnimatedCard';
 import AnimatedFlatListScreen from './components/AnimatedFlatList';
+import DeleteAnimationScreen from './components/DeleteAnimation';
 import GridMagnificationScreen from './components/GridMagnification';
 import HomeScreen from './components/HomeScreen';
 import InterpolateColorsScreen from './components/InterpolateColors';
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   GridMagnification: undefined;
   InterpolateColors: undefined;
   AnimatedFlatList: undefined;
+  DeleteAnimation: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -40,6 +42,10 @@ function App() {
         <RootStack.Screen
           name="AnimatedFlatList"
           component={AnimatedFlatListScreen}
+        />
+        <RootStack.Screen
+          name="DeleteAnimation"
+          component={DeleteAnimationScreen}
         />
       </RootStack.Navigator>
     </NavigationContainer>

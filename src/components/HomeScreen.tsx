@@ -29,6 +29,10 @@ const HomeScreen = ({navigation}: Props) => {
         title="Go to Animated FlatList"
         onPress={() => navigation.navigate('AnimatedFlatList')}
       />
+      <Button
+        title="Go to Delete Animation"
+        onPress={() => navigation.navigate('DeleteAnimation')}
+      />
     </View>
   );
 };
