@@ -60,6 +60,13 @@ const ListItem = ({task}: ListItemProps) => {
     };
   });
 
+  const rIconContainerStyle = useAnimatedStyle(() => {
+    const opacity = withTiming(
+      translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0
+    );
+    return {opacity};
+  });
+
   // return (
   //   <View style={styles.taskContainer}>
   //     <View style={styles.iconContainer}>
@@ -75,9 +82,9 @@ const ListItem = ({task}: ListItemProps) => {
 
   return (
     <View style={styles.taskContainer}>
-      <View style={styles.iconContainer}>
+      <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
         <Icon name={'trash-alt'} size={70 * 0.4} color={'red'} />
-      </View>
+      </Animated.View>
       <PanGestureHandler onGestureEvent={gesture}>
         <Animated.View style={[styles.task, rStyle]}>
           <Text style={styles.taskTitle}>{task.title}</Text>
