@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {
   // Gesture,
   // GestureDetector,
@@ -20,6 +20,11 @@ type ListItemProps = {
   task: TaskInterface;
 };
 
+const LIST_ITEM_HEIGHT = 70;
+
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
+
 const ListItem = ({task}: ListItemProps) => {
   const translateX = useSharedValue(0);
 
@@ -36,7 +41,12 @@ const ListItem = ({task}: ListItemProps) => {
       translateX.value = event.translationX;
     },
     onEnd: () => {
-      translateX.value = withTiming(0);
+      const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
+      if (shouldBeDismissed) {
+        translateX.value = withTiming(-SCREEN_WIDTH);
+      } else {
+        translateX.value = withTiming(0);
+      }
     },
   });
 
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
   },
   task: {
     width: '90%',
-    height: 70,
+    height: LIST_ITEM_HEIGHT,
     justifyContent: 'center',
     paddingStart: 20,
     backgroundColor: 'white',
@@ -104,8 +114,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   iconContainer: {
-    height: 70,
-    width: 70,
+    height: LIST_ITEM_HEIGHT,
+    width: LIST_ITEM_HEIGHT,
     position: 'absolute',
     right: '10%',
     justifyContent: 'center',
