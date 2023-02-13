@@ -27,6 +27,9 @@ const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
 const ListItem = ({task}: ListItemProps) => {
   const translateX = useSharedValue(0);
+  const itemHeight = useSharedValue(LIST_ITEM_HEIGHT);
+  const marginVertical = useSharedValue(10);
+  const opacity = useSharedValue(1);
 
   // const gesture = Gesture.Pan()
   //   .onStart(event => {
@@ -44,6 +47,9 @@ const ListItem = ({task}: ListItemProps) => {
       const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
       if (shouldBeDismissed) {
         translateX.value = withTiming(-SCREEN_WIDTH);
+        itemHeight.value = withTiming(0);
+        marginVertical.value = withTiming(0);
+        opacity.value = withTiming(0);
       } else {
         translateX.value = withTiming(0);
       }
@@ -62,9 +68,17 @@ const ListItem = ({task}: ListItemProps) => {
 
   const rIconContainerStyle = useAnimatedStyle(() => {
     const opacity = withTiming(
-      translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0
+      translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0,
     );
     return {opacity};
+  });
+
+  const rTaskContainerStyle = useAnimatedStyle(() => {
+    return {
+      height: itemHeight.value,
+      marginVertical: marginVertical.value,
+      opacity: opacity.value,
+    };
   });
 
   // return (
@@ -81,7 +95,7 @@ const ListItem = ({task}: ListItemProps) => {
   // );
 
   return (
-    <View style={styles.taskContainer}>
+    <Animated.View style={[styles.taskContainer, rTaskContainerStyle]}>
       <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
         <Icon name={'trash-alt'} size={70 * 0.4} color={'red'} />
       </Animated.View>
@@ -90,7 +104,7 @@ const ListItem = ({task}: ListItemProps) => {
           <Text style={styles.taskTitle}>{task.title}</Text>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -100,7 +114,6 @@ const styles = StyleSheet.create({
   taskContainer: {
     width: '100%',
     alignItems: 'center',
-    marginVertical: 10,
   },
   task: {
     width: '90%',
