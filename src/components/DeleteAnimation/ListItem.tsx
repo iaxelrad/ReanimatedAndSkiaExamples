@@ -1,13 +1,11 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {
-  // Gesture,
-  // GestureDetector,
-  // GestureHandlerRootView,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -18,6 +16,7 @@ import {TaskInterface} from '.';
 
 type ListItemProps = {
   task: TaskInterface;
+  onDismiss?: (task: TaskInterface) => void;
 };
 
 const LIST_ITEM_HEIGHT = 70;
@@ -25,19 +24,11 @@ const LIST_ITEM_HEIGHT = 70;
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
-const ListItem = ({task}: ListItemProps) => {
+const ListItem = ({task, onDismiss}: ListItemProps) => {
   const translateX = useSharedValue(0);
   const itemHeight = useSharedValue(LIST_ITEM_HEIGHT);
   const marginVertical = useSharedValue(10);
   const opacity = useSharedValue(1);
-
-  // const gesture = Gesture.Pan()
-  //   .onStart(event => {
-  //     translateX.value = event.translationX;
-  //   })
-  //   .onEnd(() => {
-  //     translateX.value = withTiming(0);
-  //   });
 
   const gesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: event => {
@@ -49,7 +40,11 @@ const ListItem = ({task}: ListItemProps) => {
         translateX.value = withTiming(-SCREEN_WIDTH);
         itemHeight.value = withTiming(0);
         marginVertical.value = withTiming(0);
-        opacity.value = withTiming(0);
+        opacity.value = withTiming(0, undefined, isFinished => {
+          if (isFinished && onDismiss) {
+            runOnJS(onDismiss)(task);
+          }
+        });
       } else {
         translateX.value = withTiming(0);
       }
@@ -80,19 +75,6 @@ const ListItem = ({task}: ListItemProps) => {
       opacity: opacity.value,
     };
   });
-
-  // return (
-  //   <View style={styles.taskContainer}>
-  //     <View style={styles.iconContainer}>
-  //       <Icon name={'trash-alt'} size={70 * 0.4} color={'red'} />
-  //     </View>
-  //     <GestureDetector gesture={gesture}>
-  //       <Animated.View style={[styles.task, rStyle]}>
-  //         <Text style={styles.taskTitle}>{task.title}</Text>
-  //       </Animated.View>
-  //     </GestureDetector>
-  //   </View>
-  // );
 
   return (
     <Animated.View style={[styles.taskContainer, rTaskContainerStyle]}>
