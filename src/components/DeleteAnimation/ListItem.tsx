@@ -3,6 +3,7 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
+  PanGestureHandlerProps,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -14,17 +15,18 @@ import Animated, {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TaskInterface} from '.';
 
-type ListItemProps = {
+interface ListItemProps
+  extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   task: TaskInterface;
   onDismiss?: (task: TaskInterface) => void;
-};
+}
 
 const LIST_ITEM_HEIGHT = 70;
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
-const ListItem = ({task, onDismiss}: ListItemProps) => {
+const ListItem = ({task, onDismiss, simultaneousHandlers}: ListItemProps) => {
   const translateX = useSharedValue(0);
   const itemHeight = useSharedValue(LIST_ITEM_HEIGHT);
   const marginVertical = useSharedValue(10);
@@ -81,7 +83,9 @@ const ListItem = ({task, onDismiss}: ListItemProps) => {
       <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
         <Icon name={'trash-alt'} size={70 * 0.4} color={'red'} />
       </Animated.View>
-      <PanGestureHandler onGestureEvent={gesture}>
+      <PanGestureHandler
+        simultaneousHandlers={simultaneousHandlers}
+        onGestureEvent={gesture}>
         <Animated.View style={[styles.task, rStyle]}>
           <Text style={styles.taskTitle}>{task.title}</Text>
         </Animated.View>
