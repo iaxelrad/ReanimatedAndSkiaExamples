@@ -1,12 +1,7 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import Animated, {useSharedValue} from 'react-native-reanimated';
 import {useFollowAnimatedPosition} from './useFollowAnimatedPosition';
 
 type Props = {};
