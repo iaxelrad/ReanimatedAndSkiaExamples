@@ -3,7 +3,9 @@ import React from 'react';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
 
 type Props = {};
@@ -23,12 +25,17 @@ const GestureHandlerScreen = (props: Props) => {
       translateY.value = event.translationY + context.value.y;
     });
 
+  const followX = useDerivedValue(() => {
+    return withSpring(translateX.value);
+  });
+
+  const followY = useDerivedValue(() => {
+    return withSpring(translateY.value);
+  });
+
   const rStyle = useAnimatedStyle(() => {
     return {
-      transform: [
-        {translateX: translateX.value},
-        {translateY: translateY.value},
-      ],
+      transform: [{translateX: followX.value}, {translateY: followY.value}],
     };
   });
 
