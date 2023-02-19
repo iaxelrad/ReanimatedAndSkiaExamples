@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
@@ -10,6 +10,9 @@ import Animated, {
 import {useFollowAnimatedPosition} from './useFollowAnimatedPosition';
 
 type Props = {};
+
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
+const SIZE = 80;
 
 const GestureHandlerScreen = (props: Props) => {
   const translateX = useSharedValue(0);
@@ -24,6 +27,13 @@ const GestureHandlerScreen = (props: Props) => {
     .onUpdate(event => {
       translateX.value = event.translationX + context.value.x;
       translateY.value = event.translationY + context.value.y;
+    })
+    .onEnd(() => {
+      if (translateX.value > SCREEN_WIDTH / 2) {
+        translateX.value = SCREEN_WIDTH - SIZE;
+      } else {
+        translateX.value = 0;
+      }
     });
 
   const {
@@ -70,15 +80,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   circle: {
     position: 'absolute',
-    height: 80,
+    height: SIZE,
     aspectRatio: 1,
     backgroundColor: 'blue',
-    borderRadius: 40,
+    borderRadius: SIZE / 2,
     opacity: 0.8,
   },
 });
