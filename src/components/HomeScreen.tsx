@@ -33,6 +33,10 @@ const HomeScreen = ({navigation}: Props) => {
         title="Go to Delete Animation"
         onPress={() => navigation.navigate('DeleteAnimation')}
       />
+      <Button
+        title="Go to Gesture Handler Demo"
+        onPress={() => navigation.navigate('GestureHandler')}
+      />
     </View>
   );
 };
