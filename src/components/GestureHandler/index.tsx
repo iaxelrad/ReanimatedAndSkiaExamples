@@ -26,15 +26,39 @@ const GestureHandlerScreen = (props: Props) => {
       translateY.value = event.translationY + context.value.y;
     });
 
-  const {followX, followY, rStyle} = useFollowAnimatedPosition({
+  const {
+    followX: blueFollowX,
+    followY: blueFollowY,
+    rStyle: rBlueCircleStyle,
+  } = useFollowAnimatedPosition({
     x: translateX,
     y: translateY,
   });
 
+  const {
+    followX: redFollowX,
+    followY: redFollowY,
+    rStyle: rRedCircleStyle,
+  } = useFollowAnimatedPosition({
+    x: blueFollowX,
+    y: blueFollowY,
+  });
+
+  const {rStyle: rGreenCircleStyle} = useFollowAnimatedPosition({
+    x: redFollowX,
+    y: redFollowY,
+  });
+
   return (
     <View style={styles.container}>
+      <Animated.View
+        style={[styles.circle, {backgroundColor: 'green'}, rGreenCircleStyle]}
+      />
+      <Animated.View
+        style={[styles.circle, {backgroundColor: 'red'}, rRedCircleStyle]}
+      />
       <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.circle, rStyle]} />
+        <Animated.View style={[styles.circle, rBlueCircleStyle]} />
       </GestureDetector>
     </View>
   );
@@ -50,6 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   circle: {
+    position: 'absolute',
     height: 80,
     aspectRatio: 1,
     backgroundColor: 'blue',
