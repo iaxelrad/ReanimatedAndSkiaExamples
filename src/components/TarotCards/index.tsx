@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Card} from './Card';
+import {useSharedValue} from 'react-native-reanimated';
 
 const cards = [
   {
@@ -34,10 +35,11 @@ export const assets = cards.map(card => card.source);
 type Props = {};
 
 const TarotAnimationScreen = (props: Props) => {
+  const shuffleBack = useSharedValue(false);
   return (
     <View style={styles.container}>
       {cards.map((card, index) => (
-        <Card card={card} key={index} index={index} />
+        <Card card={card} key={index} index={index} shuffleBack={shuffleBack} />
       ))}
     </View>
   );

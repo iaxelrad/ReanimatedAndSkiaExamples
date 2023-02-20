@@ -7,6 +7,7 @@ import {
 import Animated, {
   Easing,
   useAnimatedGestureHandler,
+  useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -30,14 +31,30 @@ interface CardProps {
     source: ReturnType<typeof require>;
   };
   index: number;
+  shuffleBack: Animated.SharedValue<boolean>;
 }
 
-export const Card = ({card: {source}, index}: CardProps) => {
+export const Card = ({card: {source}, index, shuffleBack}: CardProps) => {
   const x = useSharedValue(0);
   const y = useSharedValue(-height);
   const theta = Math.random() * 20 - 10;
   const rotateZ = useSharedValue(0);
   const scale = useSharedValue(1);
+  useAnimatedReaction(
+    () => shuffleBack.value,
+    () => {
+      if (shuffleBack.value) {
+        const delay = 150 * index;
+        x.value = withDelay(delay, withSpring(0));
+        rotateZ.value = withDelay(
+          delay,
+          withSpring(theta, {}, () => {
+            shuffleBack.value = false;
+          }),
+        );
+      }
+    },
+  );
 
   useEffect(() => {
     const delay = 1000 + index * DURATION;
@@ -77,7 +94,11 @@ export const Card = ({card: {source}, index}: CardProps) => {
       const dest = snapPoint(x.value, velocityX, SNAP_POINTS);
       x.value = withSpring(dest, {velocity: velocityX});
       y.value = withSpring(0, {velocity: velocityY});
-      scale.value = withTiming(1, {easing: Easing.inOut(Easing.ease)});
+      scale.value = withTiming(1, {easing: Easing.inOut(Easing.ease)}, () => {
+        if (index === 0 && dest !== 0) {
+          shuffleBack.value = true;
+        }
+      });
     },
   });
 
