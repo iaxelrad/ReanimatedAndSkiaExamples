@@ -1,13 +1,12 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text} from 'react-native';
 import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
+  Gesture,
+  GestureDetector,
   PanGestureHandlerProps,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -32,11 +31,11 @@ const ListItem = ({task, onDismiss, simultaneousHandlers}: ListItemProps) => {
   const marginVertical = useSharedValue(10);
   const opacity = useSharedValue(1);
 
-  const gesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onActive: event => {
+  const gesture = Gesture.Pan()
+    .onUpdate(event => {
       translateX.value = event.translationX;
-    },
-    onEnd: () => {
+    })
+    .onEnd(() => {
       const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
       if (shouldBeDismissed) {
         translateX.value = withTiming(-SCREEN_WIDTH);
@@ -50,8 +49,7 @@ const ListItem = ({task, onDismiss, simultaneousHandlers}: ListItemProps) => {
       } else {
         translateX.value = withTiming(0);
       }
-    },
-  });
+    });
 
   const rStyle = useAnimatedStyle(() => {
     return {
@@ -64,10 +62,10 @@ const ListItem = ({task, onDismiss, simultaneousHandlers}: ListItemProps) => {
   });
 
   const rIconContainerStyle = useAnimatedStyle(() => {
-    const opacity = withTiming(
+    const iconOpacity = withTiming(
       translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0,
     );
-    return {opacity};
+    return {opacity: iconOpacity};
   });
 
   const rTaskContainerStyle = useAnimatedStyle(() => {
@@ -83,13 +81,13 @@ const ListItem = ({task, onDismiss, simultaneousHandlers}: ListItemProps) => {
       <Animated.View style={[styles.iconContainer, rIconContainerStyle]}>
         <Icon name={'trash-alt'} size={70 * 0.4} color={'red'} />
       </Animated.View>
-      <PanGestureHandler
+      <GestureDetector
         simultaneousHandlers={simultaneousHandlers}
-        onGestureEvent={gesture}>
+        gesture={gesture}>
         <Animated.View style={[styles.task, rStyle]}>
           <Text style={styles.taskTitle}>{task.title}</Text>
         </Animated.View>
-      </PanGestureHandler>
+      </GestureDetector>
     </Animated.View>
   );
 };
