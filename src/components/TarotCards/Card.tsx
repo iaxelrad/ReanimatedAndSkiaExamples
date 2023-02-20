@@ -9,6 +9,7 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
@@ -31,11 +32,22 @@ interface CardProps {
   index: number;
 }
 
-export const Card = ({card: {source}}: CardProps) => {
+export const Card = ({card: {source}, index}: CardProps) => {
   const x = useSharedValue(0);
-  const y = useSharedValue(0);
+  const y = useSharedValue(-height);
   const rotateZ = useSharedValue(Math.random() * 20 - 10);
   const scale = useSharedValue(1);
+
+  useEffect(() => {
+    const delay = index * DURATION;
+    y.value = withDelay(
+      delay,
+      withTiming(0, {
+        duration: DURATION,
+        easing: Easing.inOut(Easing.ease),
+      }),
+    );
+  }, [index, y]);
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
