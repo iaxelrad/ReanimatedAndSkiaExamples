@@ -8,17 +8,19 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
 import {snapPoint} from 'react-native-redash';
 
-const {width: wWidth, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const SNAP_POINTS = [-wWidth, 0, wWidth];
 const aspectRatio = 722 / 368;
-const CARD_WIDTH = wWidth - 128;
+const CARD_WIDTH = width - 128;
 const CARD_HEIGHT = CARD_WIDTH * aspectRatio;
 const IMAGE_WIDTH = CARD_WIDTH * 0.9;
 const DURATION = 250;
+const side = (width + CARD_WIDTH) / 2;
+const SNAP_POINTS = [-side, 0, side];
 
 interface CardProps {
   card: {
@@ -43,6 +45,12 @@ export const Card = ({card: {source}}: CardProps) => {
       const {translationX, translationY} = event;
       x.value = translationX + ctx.x;
       y.value = translationY + ctx.y;
+    },
+    onEnd: event => {
+      const {velocityX, velocityY} = event;
+      const dest = snapPoint(x.value, velocityX, SNAP_POINTS);
+      x.value = withSpring(dest, {velocity: velocityX});
+      y.value = withSpring(0, {velocity: velocityY});
     },
   });
 
