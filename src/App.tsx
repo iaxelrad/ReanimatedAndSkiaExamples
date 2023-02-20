@@ -9,6 +9,7 @@ import GridMagnificationScreen from './components/GridMagnification';
 import HomeScreen from './components/HomeScreen';
 import InterpolateColorsScreen from './components/InterpolateColors';
 import ReanimatedBottomSheetScreen from './components/ReanimatedBottomSheet';
+import TarotAnimationScreen from './components/TarotCards';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   AnimatedFlatList: undefined;
   DeleteAnimation: undefined;
   GestureHandler: undefined;
+  TarotAnimation: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +54,10 @@ function App() {
         <RootStack.Screen
           name="GestureHandler"
           component={GestureHandlerScreen}
+        />
+        <RootStack.Screen
+          name="TarotAnimation"
+          component={TarotAnimationScreen}
         />
       </RootStack.Navigator>
     </NavigationContainer>

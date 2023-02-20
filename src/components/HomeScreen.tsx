@@ -37,6 +37,10 @@ const HomeScreen = ({navigation}: Props) => {
         title="Go to Gesture Handler Demo"
         onPress={() => navigation.navigate('GestureHandler')}
       />
+      <Button
+        title="Go to Tarot Animation Demo"
+        onPress={() => navigation.navigate('TarotAnimation')}
+      />
     </View>
   );
 };
