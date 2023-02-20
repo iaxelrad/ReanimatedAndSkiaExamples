@@ -35,11 +35,12 @@ interface CardProps {
 export const Card = ({card: {source}, index}: CardProps) => {
   const x = useSharedValue(0);
   const y = useSharedValue(-height);
-  const rotateZ = useSharedValue(Math.random() * 20 - 10);
+  const theta = Math.random() * 20 - 10;
+  const rotateZ = useSharedValue(0);
   const scale = useSharedValue(1);
 
   useEffect(() => {
-    const delay = index * DURATION;
+    const delay = 1000 + index * DURATION;
     y.value = withDelay(
       delay,
       withTiming(0, {
@@ -47,7 +48,14 @@ export const Card = ({card: {source}, index}: CardProps) => {
         easing: Easing.inOut(Easing.ease),
       }),
     );
-  }, [index, y]);
+    rotateZ.value = withDelay(
+      delay,
+      withTiming(theta, {
+        duration: DURATION,
+        easing: Easing.inOut(Easing.ease),
+      }),
+    );
+  }, [index, y, rotateZ, theta]);
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
