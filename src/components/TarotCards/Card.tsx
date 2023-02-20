@@ -31,11 +31,18 @@ export const Card = ({card: {source}}: CardProps) => {
   const x = useSharedValue(0);
   const y = useSharedValue(0);
 
-  const onGestureEvent = useAnimatedGestureHandler({
-    onActive: event => {
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    {x: number; y: number}
+  >({
+    onStart: (_, ctx) => {
+      ctx.x = x.value;
+      ctx.y = y.value;
+    },
+    onActive: (event, ctx) => {
       const {translationX, translationY} = event;
-      x.value = translationX;
-      y.value = translationY;
+      x.value = translationX + ctx.x;
+      y.value = translationY + ctx.y;
     },
   });
 
