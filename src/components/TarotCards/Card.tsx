@@ -1,6 +1,14 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, Dimensions, Image} from 'react-native';
-import type {PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 import {snapPoint} from 'react-native-redash';
 
 const {width: wWidth, height} = Dimensions.get('window');
@@ -20,18 +28,37 @@ interface CardProps {
 }
 
 export const Card = ({card: {source}}: CardProps) => {
+  const x = useSharedValue(0);
+  const y = useSharedValue(0);
+
+  const onGestureEvent = useAnimatedGestureHandler({
+    onActive: event => {
+      const {translationX, translationY} = event;
+      x.value = translationX;
+      y.value = translationY;
+    },
+  });
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: x.value}, {translateY: y.value}],
+    };
+  });
+
   return (
     <View style={styles.container} pointerEvents="box-none">
-      <View style={[styles.card]}>
-        <Image
-          source={source}
-          style={{
-            width: IMAGE_WIDTH,
-            height: IMAGE_WIDTH * aspectRatio,
-          }}
-          resizeMode="contain"
-        />
-      </View>
+      <PanGestureHandler onGestureEvent={onGestureEvent}>
+        <Animated.View style={[styles.card, rStyle]}>
+          <Image
+            source={source}
+            style={{
+              width: IMAGE_WIDTH,
+              height: IMAGE_WIDTH * aspectRatio,
+            }}
+            resizeMode="contain"
+          />
+        </Animated.View>
+      </PanGestureHandler>
     </View>
   );
 };
