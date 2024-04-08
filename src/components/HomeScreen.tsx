@@ -41,6 +41,10 @@ const HomeScreen = ({navigation}: Props) => {
         title="Go to Tarot Animation Demo"
         onPress={() => navigation.navigate('TarotAnimation')}
       />
+      <Button
+        title="Go to Credit Card Scanner Demo"
+        onPress={() => navigation.navigate('Recognizer')}
+      />
     </View>
   );
 };
